@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 const passport = require('passport');
 require('dotenv').load();
+const cookieSession = require('cookie-session');
 
 const routes = require('./routes/index');
 const users = require('./routes/users');
@@ -26,6 +27,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieSession({name: 'session', keys: ['key1', 'key2']}));
+
 
 passport.use(new LinkedInStrategy({
   clientID: process.env.LINKEDIN_CLIENT_ID,
@@ -53,7 +56,7 @@ app.use('/', routes);
 app.use('/users', users);
 
 app.get('/auth/linkedin',
-  passport.authenticate('linkedin'}),
+  passport.authenticate('linkedin'),
   function(req, res){
     // The request will be redirected to LinkedIn for authentication, so this
     // function will not be called.
