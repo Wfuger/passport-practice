@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 const passport = require('passport');
-const dotenv = require('dotenv').load();
+require('dotenv').load();
 
 const routes = require('./routes/index');
 const users = require('./routes/users');
